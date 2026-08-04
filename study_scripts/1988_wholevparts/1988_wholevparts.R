@@ -74,7 +74,7 @@ dataset_json <- RJSONIO::toJSON(dataset_list, pretty = TRUE)
 isValidJSON(dataset_json, asText = TRUE)
 
 # write out curated data and json
-write.table(wvp_data, '/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - currated_data/1988_whole_vs_parts/data/study-wholevparts_date-1988_data.csv', quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
+write.table(wvp_data, '/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - currated_data/1988_whole_vs_parts/data/assay-intake_data.csv', quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
 
 write(dataset_json, '/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - currated_data/1988_whole_vs_parts/dataset_description.json')
 

@@ -192,7 +192,7 @@ isValidJSON(dataset_json, asText = TRUE)
 
 
 # write out curated data and json
-write.table(sociofeed_data_long, '/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - currated_data/1990_sociofeed_dannys_dinner/data/study-sociofeed_date-1990_data.csv', quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
+write.table(sociofeed_data_long, '/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - currated_data/1990_sociofeed_dannys_dinner/data/assay-intake_data.csv', quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
 
 
 write(dataset_json, '/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - currated_data/1990_sociofeed_dannys_dinner/dataset_description.json')

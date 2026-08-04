@@ -19,8 +19,8 @@
 vas_hourly_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
-  "name" = "study-hourly_assay-vas_data.csv",
-  "description" = "Hourly self-reported state feelings for the 1991 Eating Disorders Study",
+  "name" = "assay-vas_data.csv",
+  "description" = "Hourly self-reported state feelings for the study titled: Daily Fluctuations in Hunger, Urges, and Affect in Eating Disorders: A 1991 Ecological Monitoring Dataset",
   "schemaVersion" = "Psych-DS 0.1.0",
   "General" = list("MissingValueCode" = "All missing values in this dataset are represented by n/a"),
   "variableMeasured" = list(

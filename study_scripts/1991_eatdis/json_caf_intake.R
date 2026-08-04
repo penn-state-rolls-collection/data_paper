@@ -20,7 +20,7 @@ caf_intake_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
   "name" = "study-cafeteria_assay-intake_data.csv",
-  "description" = "Cafeteria intake and self-reported state feelings for the 1991 Eating Disorders - Cafeteria Study",
+  "description" = "Cafeteria intake and self-reported state feelings for the Cafeteria Study in Eating Behavior, Food Preferences, and Olfactory Function in Eating Disorder Patients: Data from 1991",
   "schemaVersion" = "Psych-DS 0.1.0",
   "General" = list("MissingValueCode" = "All missing values in this dataset are represented by n/a"),
   "variableMeasured" = list(

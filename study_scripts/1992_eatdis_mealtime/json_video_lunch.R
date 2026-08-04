@@ -19,7 +19,7 @@
 video_list_lunch <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
-  "name" = "sub-*_assay-microstructure_study-lunch_rater-*.csv",
+  "name" = "sub-*_assay-microstructure_timepoint-*.csv",
   "description" = "Individual participant raw data files exported from the Video Timecode Generator (VTG) software ",
   "schemaVersion" = "Psych-DS 0.1.0",
   "General" = list("MissingValueCode" = "All missing values in this dataset are represented by n/a"),

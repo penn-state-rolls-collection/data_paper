@@ -67,3 +67,52 @@ vas_hourly['group'] <- ifelse(vas_hourly[['group']] == 4, 3, vas_hourly[['group'
                                
 # replace clear data missentry value
 vas_hourly[!is.na(vas_hourly['thirst_11am']) & vas_hourly['thirst_11am'] > 100, 'thirst_11am'] <- NA
+
+# replace ids with randomly generated values ####
+vas_hourly['id_rand'] <- as.character(vas_hourly['id'])
+
+set.seed(1991.2)
+random_ids <- random_id(n = length(unique(vas_hourly[['id']])), bytes = 2)
+
+id_count = 0
+
+for (id_val in unique(vas_hourly[['id']])){
+  id_count <- id_count + 1
+  
+  vas_hourly[vas_hourly['id'] == id_val, 'id_rand'] <- random_ids[id_count]
+}
+
+vas_hourly['id'] <- vas_hourly['id_rand']
+vas_hourly <- vas_hourly[!grepl('id_rand', names(vas_hourly))]
+
+# write data and .json ####
+curated_wd <- '/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - currated_data/1991_eatdis_hourly/'
+script_wd <- 'study_scripts/1991_eatdis_hourly/'
+
+
+# write vas hourly study data and .json ####
+source(file.path(script_wd, 'json_vas_hourly.R'))
+
+# convert formatting to JSON
+vas_hourly_json <- RJSONIO::toJSON(vas_hourly_list, pretty = TRUE)
+
+# double check
+isValidJSON(vas_hourly_json, asText = TRUE)
+
+write(vas_hourly_json, file.path(curated_wd, 'data/assay-vas_data.json'))
+
+## write out curated data
+write.table(vas_hourly, file.path(curated_wd, 'data/assay-vas_data.csv'), quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
+
+# dataset_description.json ####
+
+source(file.path(script_wd,'json_dataset_description.R'))
+
+# convert formatting to JSON
+dataset_json <- RJSONIO::toJSON(dataset_list, pretty = TRUE)
+
+# double check
+isValidJSON(dataset_json, asText = TRUE)
+
+# write out json and data files ####
+write(dataset_json, file.path(curated_wd, 'dataset_description.json'))

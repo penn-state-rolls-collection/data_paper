@@ -20,7 +20,7 @@ smell_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
   "name" = "study-smell_data.csv",
-  "description" = "Smell Study - Olfactory and smoking data related to participants in the 1991 Eating Disorders Study",
+  "description" = "Olfactory and smoking data for the dataset titled: Eating Behavior, Food Preferences, and Olfactory Function in Eating Disorder Patients: Data from 1991",
   "schemaVersion" = "Psych-DS 0.1.0",
   "General" = list("MissingValueCode" = "All missing values in this dataset are represented by n/a"),
   "variableMeasured" = list(

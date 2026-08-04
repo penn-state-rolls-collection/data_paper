@@ -21,7 +21,7 @@ caf_tdif_list <- list(
   "@type" = "Dataset",
   "name" = "study-cafeteria_calc-timedif_data.csv",
   "DatasetType" = 'derivative',
-  "description" = "Cafeteria intake differences by timepoint for the 1991 Eating Disorders - Cafeteria Study",
+  "description" = "Cafeteria intake differences by timepoint for the Cafeteria Study in Eating Behavior, Food Preferences, and Olfactory Function in Eating Disorder Patients: Data from 1991",
   "schemaVersion" = "Psych-DS 0.1.0",
   "General" = list("MissingValueCode" = "All missing values in this dataset are represented by n/a"),
   "variableMeasured" = list(

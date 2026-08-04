@@ -19,8 +19,8 @@
 salad_cond3_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
-  "name" = "study-salad_cond-highcal_data",
-  "description" = "Taste-test ratings for food attributes for the high calorie condition only in the Salad Preload - 1990 Study",
+  "name" = "assay-intake_cond-highcal_data",
+  "description" = "Taste-test ratings for food attributes for the high calorie condition only in the study titled: High- vs. Low-Calorie Preloads and Appetite Regulation in Eating Disorder Inpatients: Partial data from a 1990 Study",
   "isPartOf" = "",
   "schemaVersion" = "Psych-DS 0.1.0",
   "subjectOf" = "Rolls BJ, Andersen AE, Moran TH, McNelis AL, Baier HC, Fedoroff IC. Food intake, hunger, and satiety after preloads in women with eating disorders. The American journal of clinical nutrition. 1992 Jun 1;55(6):1093-103",

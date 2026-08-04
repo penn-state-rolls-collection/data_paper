@@ -19,8 +19,8 @@
 yogurt_sum_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
-  "name" = "study-yogurt_assay-food_data.csv",
-  "description" = "Food intake data - Yogurt Preload Study",
+  "name" = "assay-intake_data.csv",
+  "description" = "Food intake data from the study titled: High-Fat vs. High-Carbohydrate Preloads and Satiety in Bulimia Nervosa: Data from a 1991 Laboratory Study",
   "schemaVersion" = "Psych-DS 0.1.0",
   "General" = list("MissingValueCode" = "All missing values in this dataset are represented by n/a"),
   "variableMeasured" = list(

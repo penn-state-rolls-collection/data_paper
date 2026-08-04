@@ -243,5 +243,91 @@ yogurt_vas_long['group'] <- ifelse(yogurt_vas_long[['group']] == 8, 3, yogurt_va
 
 yogurt_q_data['group'] <- yogurt_q_data['group'] - 1
 
+yogurt_q_data <- yogurt_q_data[!grepl('wt|ht', names(yogurt_q_data))]
+
 # make values true percents
 yogurt_long[grepl('perc', names(yogurt_long))] <- 100 * (yogurt_long[grepl('perc', names(yogurt_long))])
+
+# replace ids with randomly generated values ####
+yogurt_vas_long['id_rand'] <- as.character(yogurt_vas_long['id'])
+
+set.seed(1991.3)
+random_ids <- random_id(n = length(unique(yogurt_vas_long[['id']])), bytes = 2)
+
+id_count = 0
+
+for (id_val in unique(yogurt_vas_long[['id']])){
+  id_count <- id_count + 1
+  
+  yogurt_vas_long[yogurt_vas_long['id'] == id_val, 'id_rand'] <- random_ids[id_count]
+}
+
+yogurt_q_data <- merge(yogurt_q_data, yogurt_vas_long[yogurt_vas_long['session'] == 1 & yogurt_vas_long['time'] == 'pre_yogurt', c('id', 'id_rand')], by = 'id')
+yogurt_q_data['id'] <- yogurt_q_data['id_rand']
+yogurt_q_data <- yogurt_q_data[!grepl('id_rand', names(yogurt_q_data))]
+
+yogurt_long <- merge(yogurt_long, yogurt_vas_long[yogurt_vas_long['time'] == 'pre_yogurt', c('id', 'id_rand', 'session')], by = c('id', 'session'))
+yogurt_long['id'] <- yogurt_long['id_rand']
+yogurt_long <- yogurt_long[!grepl('id_rand', names(yogurt_long))]
+
+yogurt_vas_long['id'] <- yogurt_vas_long['id_rand']
+yogurt_vas_long <- yogurt_vas_long[!grepl('id_rand', names(yogurt_vas_long))]
+
+
+# write data and .json ####
+curated_wd <- '/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - currated_data/1991_eatdis_yogurt/'
+script_wd <- 'study_scripts/1991_eatdis_yogurt/'
+
+# write yogurt participant data and .json ####
+source(file.path(script_wd, 'json_participant.R'))
+
+# convert formatting to JSON
+participant_json <- RJSONIO::toJSON(participant_list, pretty = TRUE)
+
+# double check
+isValidJSON(participant_json, asText = TRUE)
+
+write(participant_json, file.path(curated_wd, 'data/assay-demo_data.json'))
+
+# write yogurt preload intake data and .json ####
+source(file.path(script_wd, 'json_yogurt_sum.R'))
+
+# convert formatting to JSON
+yogurt_sum_json <- RJSONIO::toJSON(yogurt_sum_list, pretty = TRUE)
+
+# double check
+isValidJSON(yogurt_sum_json, asText = TRUE)
+
+write(yogurt_sum_json, file.path(curated_wd, 'data/assay-intake_data.json'))
+
+# write out curated data
+write.table(yogurt_long, file.path(curated_wd, 'data/assay-intake_data.csv'), quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
+
+# write yogurt preload data and .json ####
+source(file.path(script_wd, 'json_yogurt_vas.R'))
+
+# convert formatting to JSON
+yogurt_vas_json <- RJSONIO::toJSON(yogurt_vas_list, pretty = TRUE)
+
+# double check
+isValidJSON(yogurt_vas_json, asText = TRUE)
+
+write(yogurt_vas_json, file.path(curated_wd, 'data/assay-vas_data.json'))
+
+# write out curated data
+write.table(yogurt_vas_long, file.path(curated_wd, 'data/assay-vas_dat.csv'), quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
+
+# dataset_description.json ####
+
+source(file.path(script_wd,'json_dataset_description.R'))
+
+# convert formatting to JSON
+dataset_json <- RJSONIO::toJSON(dataset_list, pretty = TRUE)
+
+# double check
+isValidJSON(dataset_json, asText = TRUE)
+
+
+# write out json and data files ####
+write(dataset_json, file.path(curated_wd, 'dataset_description.json'))
+

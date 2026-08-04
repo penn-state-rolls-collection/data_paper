@@ -20,7 +20,7 @@ foodpref_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
   "name" = "upsit",
-  "description" = "Food preference rating data related to participants in the SSS Yogurt - 1990 Study",
+  "description" = "Food preference rating data related for the datset titled: Age Differences in Sensory-Specific Satiety After Yogurt Consumption: Data from a 1990 Laboratory Study",
   "schemaVersion" = "Psych-DS 0.1.0",
   "General" = list("MissingValueCode" = "All missing values in this dataset are represented by n/a"),
   "variableMeasured" = list(

@@ -19,8 +19,8 @@
 yogurt_vas_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
-  "name" = "study-yogurt_assay-vas_data.csv",
-  "description" = "Visual analog scale ratings - Yogurt Preload Study",
+  "name" = "assay-vas_data.csv",
+  "description" = "Visual analog scale ratings from the study titled: High-Fat vs. High-Carbohydrate Preloads and Satiety in Bulimia Nervosa: Data from a 1991 Laboratory Study",
   "schemaVersion" = "Psych-DS 0.1.0",
   "General" = list("MissingValueCode" = "All missing values in this dataset are represented by n/a"),
   "variableMeasured" = list(

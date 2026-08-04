@@ -20,7 +20,7 @@ foodpref_foodinfo_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
   "name" = "study-foodpref_calc-foodinfo_data.csv",
-  "description" = "Food Preference Questionnaire food attributes for energy density, carbohydrates, and fat from the 1991 Eating Disorders - Food Preference Study",
+  "description" = "Food Preference Questionnaire food attributes for energy density, carbohydrates, and fat from the Food Preference Study in Eating Behavior, Food Preferences, and Olfactory Function in Eating Disorder Patients: Data from 1991",
   "schemaVersion" = "Psych-DS 0.1.0",
   "General" = list("MissingValueCode" = "All missing values in this dataset are represented by n/a"),
   "variableMeasured" = list(

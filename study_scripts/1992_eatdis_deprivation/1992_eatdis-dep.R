@@ -223,3 +223,91 @@ dep_data['group'] <- ifelse(dep_data[['group']] >= 4, 3, dep_data[['group']])
 
 dep_q_data <- dep_data[c('id', 'group', 'restrict_cond', 'age', 'zung', 'eat', 'bsq', 'edi_body_dissat', 'ei_cog_restraint', 'ei_hunger', 'ei_disinhibit', 'perc_ideal_bw', 'illness_dur')]
 
+
+# replace ids with randomly generated values ####
+dep_q_data['id_rand'] <- as.character(dep_q_data['id'])
+
+set.seed(1992.1)
+random_ids <- random_id(n = length(unique(dep_q_data[['id']])), bytes = 2)
+
+id_count = 0
+
+for (id_val in unique(dep_q_data[['id']])){
+  id_count <- id_count + 1
+  
+  dep_q_data[dep_q_data['id'] == id_val, 'id_rand'] <- random_ids[id_count]
+}
+
+# match up random IDs and remove orig IDs ####
+dep_long <- merge(dep_long, dep_q_data[c('id', 'id_rand')], by = 'id', all.x = TRUE)
+dep_long['id'] <- dep_long['id_rand']
+dep_long <- dep_long[!grepl('id_rand', names(dep_long))]
+
+# match up ids for individual video coding files
+curated_wd <- '/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - currated_data/1992_eatdis_deprivation/'
+script_wd <- 'study_scripts/1992_eatdis_deprivation/'
+source(file.path(script_wd, '1992_eatdis-dep_video.R'))
+
+dep_id_list$id <- as.numeric(dep_id_list$id)
+dep_id_list <- merge(dep_id_list, dep_q_data[c('id', 'id_rand')], by = 'id')
+
+dep_q_data['id'] <- dep_q_data['id_rand']
+dep_q_data <- dep_q_data[!grepl('id_rand', names(dep_q_data))]
+
+
+# write demo intake data and .json ####
+source(file.path(script_wd, 'json_participant.R'))
+
+# convert formatting to JSON
+participant_json <- RJSONIO::toJSON(participant_list, pretty = TRUE)
+
+# double check
+isValidJSON(participant_json, asText = TRUE)
+
+write(participant_json, file.path(curated_wd, 'data/assay-demo_data.json'))
+
+# write out curated data
+write.table(dep_q_data, file.path(curated_wd, 'data/assay-demo_data.csv'), quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
+
+
+# write food deprivation intake data and .json ####
+source(file.path(script_wd,'json_dep_intake.R'))
+
+# convert formatting to JSON
+dep_intake_json <- RJSONIO::toJSON(dep_intake_list, pretty = TRUE)
+
+# double check
+isValidJSON(dep_intake_json, asText = TRUE)
+
+write(dep_intake_json, file.path(curated_wd, 'data/assay-intake_data.json'))
+
+# write out curated data
+write.table(dep_long, file.path(curated_wd, 'data/assay-intake_data.csv'), quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
+
+# dataset_description.json ####
+
+source(file.path(script_wd,'json_dataset_description.R'))
+
+# convert formatting to JSON
+dataset_json <- RJSONIO::toJSON(dataset_list, pretty = TRUE)
+
+# double check
+isValidJSON(dataset_json, asText = TRUE)
+
+
+# write out json and data files ####
+write(dataset_json, file.path(curated_wd, 'dataset_description.json'))
+
+## raw video data ####
+# copy and save individual files
+mapply(parse_vid_records, file_path = dep_id_list[['file_path']], id = dep_id_list[['id']], cond = dep_id_list[['cond']], id_rand = dep_id_list[['id_rand']], MoreArgs = list(curated_wd = curated_wd))
+
+# export json for individual files
+source(file.path(script_wd, 'json_video_ind.R'))
+vid_json <- RJSONIO::toJSON(video_list, pretty = TRUE)
+
+# double check
+isValidJSON(vid_json, asText = TRUE)
+
+write(vid_json, file.path(curated_wd, 'data/raw/assay-microstructure.json'))
+

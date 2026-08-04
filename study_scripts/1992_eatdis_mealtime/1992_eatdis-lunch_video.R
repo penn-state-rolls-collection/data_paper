@@ -112,7 +112,7 @@ parse_lunchvid_records <- function(file_path, id, cond, curated_wd, id_rand, gro
     cond_str = 'b'
   }
   
-  new_file_name <- paste0('sub-', id_rand, '_assay-microstructure_study-lunch_timepoint-', cond_str, '.csv')
+  new_file_name <- paste0('sub-', id_rand, '_assay-microstructure_timepoint-', cond_str, '.csv')
   write.table(data_tab, file.path(curated_wd, 'data', 'raw', new_file_name), quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
   
 }

@@ -20,7 +20,7 @@ participant_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
   "name" = "participants",
-  "description" = "Demographic data related to participants in the SSS Yogurt - 1990 Study",
+  "description" = "Demographic data for the datset titled: Age Differences in Sensory-Specific Satiety After Yogurt Consumption: Data from a 1990 Laboratory Study",
   "schemaVersion" = "Psych-DS 0.1.0",
   "General" = list("MissingValueCode" = "All missing values in this dataset are represented by n/a"),
   "variableMeasured" = list(
@@ -76,8 +76,7 @@ participant_list <- list(
          "description" = "n/a; unknown variable",
          "@type" = "PropertyValue"),
     list("name" = "ei", 
-         "description" = "cognitive dietary restraint classification based on Stunkard Eating Inventory score (for score see eisc)",
-         "value" = "0 = not cognitively restrained (eisc < 10),\n1 = cognitive dietary restraint (eisc >= 10)",
+         "description" = "Stunkard Eating Inventory score",
          "MeasurementTechnique" = "Stunkard, A. J., & Messick, S. (1988). Eating inventory manual. San Antonio, TX: Harcourt Brace Jovanovich, Inc.",
          "@type" = "PropertyValue"),
     list("name" = "eisc", 

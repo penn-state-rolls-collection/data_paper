@@ -25,8 +25,6 @@ library(ids)
 # load
 base_wd_dep <- '/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - Archived Study Data 1988-1999/1992 EatDis Deprivation/Data - Individual/Indiv Excel - Food intake Aug 1994/'
 
-base_wd_lunch <- '/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - Archived Study Data 1988-1999/1992 EatDis Mealtime (CAMERA)/Individual Data 1993-94/'
-
 
 #get list of files
 dep_paths <- list.files(path = base_wd_dep, pattern = "\\.XLS$", full.names = TRUE)
@@ -120,7 +118,7 @@ parse_vid_records <- function(file_path, id, cond, curated_wd, id_rand) {
   }
   
   # new filename
-  new_file_name <- paste0('sub-', id_rand, '_assay-microstructure_study-dep_cond-', cond, '.csv')
+  new_file_name <- paste0('sub-', id_rand, '_assay-microstructure_cond-', cond, '.csv')
   write.table(data_tab, file.path(curated_wd, 'data', 'raw', new_file_name), quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
   
 }

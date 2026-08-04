@@ -19,8 +19,8 @@
 dep_intake_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
-  "name" = "study-deprivation_assay-intake_data.csv",
-  "description" = "Food intake and self-reported state feelings for the 1991 Eating Disorders - Deprivation Study",
+  "name" = "assay-intake_data.csv",
+  "description" = "Food intake and self-reported state feelings for the study titled: Effects of Overnight Fasting on Appetite and Meal Behavior in Eating Disorders: A 1992 Laboratory Study",
   "schemaVersion" = "Psych-DS 0.1.0",
   "General" = list("MissingValueCode" = "All missing values in this dataset are represented by n/a"),
   "variableMeasured" = list(

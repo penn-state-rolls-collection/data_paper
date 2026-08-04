@@ -113,4 +113,91 @@ sss3_rate_long['group'] <- ifelse(sss3_rate_long[['group']] == 5, 3, sss3_rate_l
 sss3_rate_long['group'] <- ifelse(sss3_rate_long[['group']] < 3, sss3_rate_long[['group']] - 1, sss3_rate_long[['group']])
 sss3_rate_long['cond'] <- sss3_rate_long[['cond']] - 1
 
+# replace ids with randomly generated values ####
+hunger_dat_long['id_rand'] <- as.character(hunger_dat_long['id'])
 
+set.seed(1990.3)
+random_ids <- random_id(n = length(unique(hunger_dat_long[['id']])), bytes = 2)
+
+id_count = 0
+
+for (id_val in unique(hunger_dat_long[['id']])){
+  id_count <- id_count + 1
+  
+  hunger_dat_long[hunger_dat_long['id'] == id_val, 'id_rand'] <- random_ids[id_count]
+}
+
+# match up random IDs and remove orig IDs ####
+diff_data <- merge(diff_data, hunger_dat_long[hunger_dat_long['time'] == 0, c('id', 'id_rand', 'cond')], by = c('id', 'cond'), all.x = TRUE)
+
+# manual fix one ID that was missing in hunger_dat_long
+diff_data[diff_data['id'] == 544, 'id_rand'] <- diff_data[diff_data['id'] == 544 & diff_data['cond'] == 0, 'id_rand']
+
+diff_data['id'] <- diff_data['id_rand']
+diff_data <- diff_data[!grepl('id_rand', names(diff_data))]
+
+sss3_rate_long <- merge(sss3_rate_long, hunger_dat_long[hunger_dat_long['time'] == 0, c('id', 'id_rand', 'cond')], by = c('id', 'cond'))
+sss3_rate_long['id'] <- sss3_rate_long['id_rand']
+sss3_rate_long <- sss3_rate_long[!grepl('id_rand', names(sss3_rate_long))]
+
+hunger_dat_long['id'] <- hunger_dat_long['id_rand']
+hunger_dat_long <- hunger_dat_long[!grepl('id_rand', names(hunger_dat_long))]
+
+# write salad preload difference data and .json ####
+curated_wd <- '/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - currated_data/1990_eatdis_salad_preload/'
+script_wd <- 'study_scripts/1990_eatdis_saladpreload/'
+
+source(file.path(script_wd, 'json_preload-salad_dif.R'))
+
+# convert formatting to JSON
+salad_dif_json <- RJSONIO::toJSON(salad_dif_list, pretty = TRUE)
+
+# double check
+isValidJSON(salad_dif_json, asText = TRUE)
+
+write(salad_dif_json, file.path(curated_wd, 'data/assay-sss_calc-diff_data.json'))
+
+# write out curated data
+write.table(diff_data, file.path(curated_wd, 'data/assay-sss_calc-diff_data.csv'), quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
+
+# write salad preload hunger data and .json ####
+source(file.path(script_wd, 'json_preload-salad_hunger.R'))
+
+# convert formatting to JSON
+salad_hunger_json <- RJSONIO::toJSON(salad_hunger_list, pretty = TRUE)
+
+# double check
+isValidJSON(salad_hunger_json, asText = TRUE)
+
+write(salad_hunger_json, file.path(curated_wd, 'data/assay-hunger_data.json'))
+
+# write out curated data
+write.table(hunger_dat_long, file.path(curated_wd, 'data/assay-hunger_data.csv'), quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
+
+# write salad preload cond 3 data and .json ####
+source(file.path(script_wd, 'json_preload-salad_cond3.R'))
+
+# convert formatting to JSON
+salad_cond3_json <- RJSONIO::toJSON(salad_cond3_list, pretty = TRUE)
+
+# double check
+isValidJSON(salad_cond3_json, asText = TRUE)
+
+write(salad_cond3_json, file.path(curated_wd, 'data/assay-intake_cond-highcal_data.json'))
+
+# write out curated data
+write.table(sss3_rate_long, file.path(curated_wd, 'data/assay-intake_cond-highcal_data.csv'), quote = FALSE, sep = ',', col.names = TRUE, row.names = FALSE, na = 'n/a')
+
+# dataset_description.json ####
+
+source(file.path(script_wd,'json_dataset_description.R'))
+
+# convert formatting to JSON
+dataset_json <- RJSONIO::toJSON(dataset_list, pretty = TRUE)
+
+# double check
+isValidJSON(dataset_json, asText = TRUE)
+
+
+# write out json and data files ####
+write(dataset_json, file.path(curated_wd, 'dataset_description.json'))

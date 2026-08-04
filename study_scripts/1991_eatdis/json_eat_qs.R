@@ -20,7 +20,7 @@ eat_qs_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
   "name" = "assay-questionnaire_data.csv",
-  "description" = "Eating behavior questionnaire data related to participants in the 1991 Eating Disorders Study",
+  "description" = "Eating behavior questionnaire data related for the dataset titled: Eating Behavior, Food Preferences, and Olfactory Function in Eating Disorder Patients: Data from 1991",
   "schemaVersion" = "Psych-DS 0.1.0",
   "General" = list("MissingValueCode" = "All missing values in this dataset are represented by n/a"),
   "variableMeasured" = list(
@@ -126,24 +126,4 @@ eat_qs_list <- list(
          "minValue" = "3",
          "maxValue" = "136",
          "measurementTechnique" = "Garner DM, Garfinkel PE. The Eating Attitudes Test: An index of the symptoms of anorexia nervosa. Psychological medicine. 1979 May;9(2):273-9.",
-         "@type" = "PropertyValue"),
-    list("name" = "ei", 
-         "description" = "Stunkard Eating Inventory score",
-         "minValue" = "0",
-         "maxValue" = "9",
-         "measurementTechnique" = "Stunkard, A. J., & Messick, S. (1988). Eating inventory manual. San Antonio, TX: Harcourt Brace Jovanovich, Inc.",
-         "@type" = "PropertyValue"), 
-    list("name" = "zung", 
-         "description" = "Zung Self-Rating Scale for Depression",
-         "minValue" = "27.5",
-         "maxValue" = "48.75",
-         "measurementTechnique" = "Zung, W. W. K. (1986). Zung Self-Rating Depression Scale and Depression Status Inventory.
-In N. Sartorius and T. A. Ban (eds), Assessment of Depression. Pp. 221–231. Berlin:
-Springer-Verlag.",
-         "@type" = "PropertyValue"), 
-    list("name" = "bsq", 
-         "description" = "Body Shape Questionnaire Score",
-         "minValue" = "61",
-         "maxValue" = "184",
-         "measurementTechnique" = "Cooper PJ, Taylor MJ, Cooper Z, Fairbum CG. The development and validation of the Body Shape Questionnaire. International Journal of Eating Disorders. 1987 Jul;6(4):485-94.",
          "@type" = "PropertyValue")))

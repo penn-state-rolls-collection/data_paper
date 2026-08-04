@@ -19,8 +19,8 @@
 salad_dif_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
-  "name" = "study-salad_calc-vasdiff_data",
-  "description" = "Differences scores for food attributes across 3 preload conditions in the Salad Preload - 1990 Study",
+  "name" = "assay-sss_calc-diff_data",
+  "description" = "Differences scores for food attributes across 3 preload conditions in the study titled: High- vs. Low-Calorie Preloads and Appetite Regulation in Eating Disorder Inpatients: Partial data from a 1990 Study",
   "isPartOf" = "",
   "schemaVersion" = "Psych-DS 0.1.0",
   "subjectOf" = "Rolls BJ, Andersen AE, Moran TH, McNelis AL, Baier HC, Fedoroff IC. Food intake, hunger, and satiety after preloads in women with eating disorders. The American journal of clinical nutrition. 1992 Jun 1;55(6):1093-103",

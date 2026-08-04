@@ -19,8 +19,9 @@
 dataset_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
-  "name" = "Eating Behavior, Food Preferences, and Olfactory Function in Eating Disorder Patients: Data from 1991",
-  "description" = "This dataset contains data from three experimental protocols with inpatients from the Johns Hopkins Hospital Eating Disorder Unit and healthy community controls. Inpatient participants completed the protocols within one week of admission and at discharge while healthy controls completed the protocols a few weeks apart.",
+  "name" = "Daily Fluctuations in Hunger, Urges, and Affect in Eating Disorders: A 1991 Ecological Monitoring Dataset
+",
+  "description" = "This dataset contains hourly self-report data collected in 1991 from inpatients at the Johns Hopkins Hospital Eating Disorder Unit and healthy community controls. Visual analog scales (VAS) were used to assess hunger, thirst, desire to binge and purge, fear of being fat, anxiety, and depression every hour from 8:00 a.m. to 10:00 p.m. and before and after each meal. This was completed weekly on Fridays, starting with the first Friday after admission. ",
   "schemaVersion" = "Psych-DS 0.1.0",
   "author" = list(
     list("@type" = "Person",
@@ -32,9 +33,7 @@ dataset_list <- list(
          "name" = "Susan A. Stoner",
          "ORCID" = "0000-0001-8548-219X"),
     list("@type" = "Person",
-         "name" = "Ingrid C. Fedoroff"),
-    list("@type" = "Person",
-         "name" = "Richard L. Doty"),
+         "name" = "Ingrid C. Federoff"),
     list("@type" = "Person",
          "name" = "Barbara J Rolls",
          "ORCID" = "0000-0003-2374-1517")),

@@ -20,7 +20,7 @@ upsit_list <- list(
   "@context" = "http://schema.org/",
   "@type" = "Dataset",
   "name" = "upsit",
-  "description" = "Smell functionality data related to participants in the SSS Yogurt - 1990 Study",
+  "description" = "Smell functionality data for the datset titled: Age Differences in Sensory-Specific Satiety After Yogurt Consumption: Data from a 1990 Laboratory Study",
   "schemaVersion" = "Psych-DS 0.1.0",
   "MeasurementToolMetadata" = list(
     "name" = "Smell Identification Test (known as University of Pennsylvania Smell Identification Test in 1990)",
