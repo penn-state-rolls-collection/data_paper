@@ -24,11 +24,11 @@ library(ids)
 library(reshape2)
 
 # load
-intakecalc_data <- read_excel('/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - Archived Study Data 1988-1999/1990 Sociofeed/Data - Excel from SPSS/SocIDin 1995-04-13.xls')
+intakecalc_data <- read_excel('/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - Archived Study Data 1988-1999/1990 Sociofeed/Data - Excel from SPSS/SocIDin 1995-04-13.xls', na = c(999, ''))
 
-intake_data <- read_excel('/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - Archived Study Data 1988-1999/1990 Sociofeed/Data - Excel from SPSS/SociFeed 1994-11-30.xls')
+intake_data <- read_excel('/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - Archived Study Data 1988-1999/1990 Sociofeed/Data - Excel from SPSS/SociFeed 1994-11-30.xls', na = c(999, ''))
 
-vas_data <- read_excel('/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - Archived Study Data 1988-1999/1990 Sociofeed/Data - Excel from SPSS/SociVAS 1992-04-27A.xls')
+vas_data <- read_excel('/Users/azp271/Library/CloudStorage/OneDrive-ThePennsylvaniaStateUniversity/Rolls, Barbara Jeans files - Archived Study Data 1988-1999/1990 Sociofeed/Data - Excel from SPSS/SociVAS 1992-04-27A.xls', na = c(999, ''))
 
 # pull out key demo data
 demo_data <- intake_data[c('id', 'friend', 'sex', 'rest')]
