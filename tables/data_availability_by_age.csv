@@ -1,0 +1,22 @@
+age_group,measure,n_present,n_studies_age,percent
+Adult,BMI / weight status,49,67,73.1
+Adult,Carbohydrate intake,36,67,53.7
+Adult,Fat intake,36,67,53.7
+Adult,Fiber intake,7,67,10.4
+Adult,Measured intake,50,67,74.6
+Adult,Protein intake,36,67,53.7
+Adult,Socioeconomic status,8,67,11.9
+Child,BMI / weight status,19,21,90.5
+Child,Carbohydrate intake,10,21,47.6
+Child,Fat intake,10,21,47.6
+Child,Fiber intake,9,21,42.9
+Child,Measured intake,20,21,95.2
+Child,Protein intake,10,21,47.6
+Child,Socioeconomic status,15,21,71.4
+Elderly,BMI / weight status,1,2,50
+Elderly,Carbohydrate intake,1,2,50
+Elderly,Fat intake,1,2,50
+Elderly,Fiber intake,0,2,0
+Elderly,Measured intake,1,2,50
+Elderly,Protein intake,1,2,50
+Elderly,Socioeconomic status,0,2,0

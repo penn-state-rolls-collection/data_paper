@@ -1,0 +1,41 @@
+domain,variable,feature,n_studies,total_studies,percent
+Study design/population,eating_disorder,Eating-disorder sample,1,91,1.098901098901099
+Study design/population,ed_manipulation,Energy density,19,91,20.87912087912088
+Study design/population,fat_manipulation,Fat manipulation,7,91,7.6923076923076925
+Study design/population,food_form,Food form,1,91,1.098901098901099
+Study design/population,microstructure,Eating rate/Microstructure,2,91,2.197802197802198
+Study design/population,obesity,Obesity sample,10,91,10.989010989010989
+Study design/population,preload_used,Preload,16,91,17.582417582417584
+Study design/population,ps_manipulation,Portion size,31,91,34.065934065934066
+Study design/population,social_context,Social context,2,91,2.197802197802198
+Study design/population,sss,Sensory-specific satiety,7,91,7.6923076923076925
+Study design/population,volume_manipulation,Volume,4,91,4.395604395604396
+Study design/population,weight_loss,Weight-loss intervention,6,91,6.593406593406594
+Demographics,age,Age,76,91,83.51648351648352
+Demographics,bmi,BMI/Weight status,69,91,75.82417582417582
+Demographics,ses,Socioeconomic status,23,91,25.274725274725274
+Demographics,sex,Sex,56,91,61.53846153846154
+Intake/eating behavior,cho_intake,Carbohydrate intake,47,91,51.64835164835166
+Intake/eating behavior,current_status_q,Current-status questions,16,91,17.582417582417584
+Intake/eating behavior,eat_duration,Eating duration,2,91,2.197802197802198
+Intake/eating behavior,fat_intake,Fat intake,47,91,51.64835164835166
+Intake/eating behavior,fiber_intake,Fiber intake,16,91,17.582417582417584
+Intake/eating behavior,food_preference,Food preference,27,91,29.67032967032967
+Intake/eating behavior,measured_intake,Measured intake,71,91,78.02197802197803
+Intake/eating behavior,pre_post_meal_q,Pre/Post-meal ratings,53,91,58.24175824175825
+Intake/eating behavior,pro_intake,Protein intake,47,91,51.64835164835166
+Intake/eating behavior,recall_intake,Recall intake,4,91,4.395604395604396
+Intake/eating behavior,substance_use,Substance use,2,91,2.197802197802198
+Questionnaires/related measures,beck,Beck,12,91,13.186813186813188
+Questionnaires/related measures,birth_control,Birth control,1,91,1.098901098901099
+Questionnaires/related measures,bsq,BSQ,1,91,1.098901098901099
+Questionnaires/related measures,cfq,CFQ,10,91,10.989010989010989
+Questionnaires/related measures,debq,DEBQ,3,91,3.296703296703297
+Questionnaires/related measures,eat,EAT,44,91,48.35164835164835
+Questionnaires/related measures,edi,EDI,1,91,1.098901098901099
+Questionnaires/related measures,ei,EI,48,91,52.74725274725275
+Questionnaires/related measures,menstrual_cycle,Menstrual cycle,1,91,1.098901098901099
+Questionnaires/related measures,pfs,PFS,4,91,4.395604395604396
+Questionnaires/related measures,qewp-r,QEWP-R,1,91,1.098901098901099
+Questionnaires/related measures,upsit,UPSIT,2,91,2.197802197802198
+Questionnaires/related measures,zung,Zung,42,91,46.15384615384615

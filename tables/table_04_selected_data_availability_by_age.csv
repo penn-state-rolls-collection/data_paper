@@ -1,0 +1,22 @@
+sample_age_clean,variable,n_studies,total_studies_age,percent,feature
+Adult,measured_intake,52,69,75.3623188405797,Measured intake
+Adult,bmi,51,69,73.91304347826087,BMI/Weight status
+Adult,cho_intake,38,69,55.072463768115945,Carbohydrate intake
+Adult,fat_intake,38,69,55.072463768115945,Fat intake
+Adult,pro_intake,38,69,55.072463768115945,Protein intake
+Adult,ses,8,69,11.594202898550725,Socioeconomic status
+Adult,fiber_intake,8,69,11.594202898550725,Fiber intake
+Child,measured_intake,19,21,90.47619047619048,Measured intake
+Child,bmi,18,21,85.71428571428571,BMI/Weight status
+Child,ses,15,21,71.42857142857143,Socioeconomic status
+Child,cho_intake,9,21,42.857142857142854,Carbohydrate intake
+Child,fat_intake,9,21,42.857142857142854,Fat intake
+Child,fiber_intake,9,21,42.857142857142854,Fiber intake
+Child,pro_intake,9,21,42.857142857142854,Protein intake
+Elderly,bmi,1,2,50,BMI/Weight status
+Elderly,cho_intake,1,2,50,Carbohydrate intake
+Elderly,fat_intake,1,2,50,Fat intake
+Elderly,measured_intake,1,2,50,Measured intake
+Elderly,pro_intake,1,2,50,Protein intake
+Elderly,ses,0,2,0,Socioeconomic status
+Elderly,fiber_intake,0,2,0,Fiber intake

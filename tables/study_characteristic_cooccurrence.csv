@@ -1,0 +1,65 @@
+variable_1,variable_2,n_studies,feature_1,feature_2
+preload_used,preload_used,16,Preload,Preload
+sss,preload_used,3,Sensory-specific satiety,Preload
+ps_manipulation,preload_used,2,Portion size,Preload
+ed_manipulation,preload_used,2,Energy density,Preload
+fat_manipulation,preload_used,2,Fat manipulation,Preload
+volume_manipulation,preload_used,1,Volume,Preload
+weight_loss,preload_used,0,Weight-loss intervention,Preload
+microstructure,preload_used,1,Eating rate/Microstructure,Preload
+preload_used,sss,3,Preload,Sensory-specific satiety
+sss,sss,7,Sensory-specific satiety,Sensory-specific satiety
+ps_manipulation,sss,1,Portion size,Sensory-specific satiety
+ed_manipulation,sss,0,Energy density,Sensory-specific satiety
+fat_manipulation,sss,1,Fat manipulation,Sensory-specific satiety
+volume_manipulation,sss,0,Volume,Sensory-specific satiety
+weight_loss,sss,0,Weight-loss intervention,Sensory-specific satiety
+microstructure,sss,2,Eating rate/Microstructure,Sensory-specific satiety
+preload_used,ps_manipulation,2,Preload,Portion size
+sss,ps_manipulation,1,Sensory-specific satiety,Portion size
+ps_manipulation,ps_manipulation,31,Portion size,Portion size
+ed_manipulation,ps_manipulation,7,Energy density,Portion size
+fat_manipulation,ps_manipulation,0,Fat manipulation,Portion size
+volume_manipulation,ps_manipulation,0,Volume,Portion size
+weight_loss,ps_manipulation,1,Weight-loss intervention,Portion size
+microstructure,ps_manipulation,1,Eating rate/Microstructure,Portion size
+preload_used,ed_manipulation,2,Preload,Energy density
+sss,ed_manipulation,0,Sensory-specific satiety,Energy density
+ps_manipulation,ed_manipulation,7,Portion size,Energy density
+ed_manipulation,ed_manipulation,19,Energy density,Energy density
+fat_manipulation,ed_manipulation,2,Fat manipulation,Energy density
+volume_manipulation,ed_manipulation,1,Volume,Energy density
+weight_loss,ed_manipulation,1,Weight-loss intervention,Energy density
+microstructure,ed_manipulation,0,Eating rate/Microstructure,Energy density
+preload_used,fat_manipulation,2,Preload,Fat manipulation
+sss,fat_manipulation,1,Sensory-specific satiety,Fat manipulation
+ps_manipulation,fat_manipulation,0,Portion size,Fat manipulation
+ed_manipulation,fat_manipulation,2,Energy density,Fat manipulation
+fat_manipulation,fat_manipulation,7,Fat manipulation,Fat manipulation
+volume_manipulation,fat_manipulation,0,Volume,Fat manipulation
+weight_loss,fat_manipulation,0,Weight-loss intervention,Fat manipulation
+microstructure,fat_manipulation,0,Eating rate/Microstructure,Fat manipulation
+preload_used,volume_manipulation,1,Preload,Volume
+sss,volume_manipulation,0,Sensory-specific satiety,Volume
+ps_manipulation,volume_manipulation,0,Portion size,Volume
+ed_manipulation,volume_manipulation,1,Energy density,Volume
+fat_manipulation,volume_manipulation,0,Fat manipulation,Volume
+volume_manipulation,volume_manipulation,4,Volume,Volume
+weight_loss,volume_manipulation,0,Weight-loss intervention,Volume
+microstructure,volume_manipulation,0,Eating rate/Microstructure,Volume
+preload_used,weight_loss,0,Preload,Weight-loss intervention
+sss,weight_loss,0,Sensory-specific satiety,Weight-loss intervention
+ps_manipulation,weight_loss,1,Portion size,Weight-loss intervention
+ed_manipulation,weight_loss,1,Energy density,Weight-loss intervention
+fat_manipulation,weight_loss,0,Fat manipulation,Weight-loss intervention
+volume_manipulation,weight_loss,0,Volume,Weight-loss intervention
+weight_loss,weight_loss,6,Weight-loss intervention,Weight-loss intervention
+microstructure,weight_loss,0,Eating rate/Microstructure,Weight-loss intervention
+preload_used,microstructure,1,Preload,Eating rate/Microstructure
+sss,microstructure,2,Sensory-specific satiety,Eating rate/Microstructure
+ps_manipulation,microstructure,1,Portion size,Eating rate/Microstructure
+ed_manipulation,microstructure,0,Energy density,Eating rate/Microstructure
+fat_manipulation,microstructure,0,Fat manipulation,Eating rate/Microstructure
+volume_manipulation,microstructure,0,Volume,Eating rate/Microstructure
+weight_loss,microstructure,0,Weight-loss intervention,Eating rate/Microstructure
+microstructure,microstructure,2,Eating rate/Microstructure,Eating rate/Microstructure
