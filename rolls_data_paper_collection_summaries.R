@@ -5,6 +5,17 @@ library(stringr)
 library(ggplot2)
 library(scales)
 
+rolls_colors <- c(
+  orange = "#E69F00",
+  sky = "#56B4E9",
+  green = "#009E73",
+  yellow = "#F0E442",
+  blue = "#0072B2",
+  vermillion = "#D55E00",
+  purple = "#CC79A7",
+  black = "#000000"
+)
+
 rolls_data <- read_csv(
   "data/rolls_collection_overview(Overview).csv",
   show_col_types = FALSE,
@@ -34,7 +45,7 @@ clean_age <- function(x) {
   case_when(
     x %in% c("chef", "chefs", "adult", "adults") ~ "Adult",
     str_detect(x, "child|children|pediatric|paediatric|adolescent|teen") ~ "Child",
-    str_detect(x, "elder|older") ~ "Elderly",
+    str_detect(x, "elder|older") ~ "Older adults",
     str_detect(x, "adult") ~ "Adult",
     TRUE ~ str_to_title(x)
   )
@@ -203,7 +214,7 @@ save_horizontal_percent <- function(
     arrange(percent) %>%
     mutate(feature = factor(feature, levels = feature)) %>%
     ggplot(aes(x = percent, y = feature)) +
-    geom_col(width = 0.72) +
+    geom_col(width = 0.72, fill = unname(rolls_colors["blue"])) +
     geom_text(
       aes(label = label),
       hjust = -0.08,
@@ -224,7 +235,8 @@ save_horizontal_percent <- function(
     theme(
       panel.grid.major.y = element_blank(),
       panel.grid.minor = element_blank(),
-      plot.title = element_text(face = "bold")
+      plot.title = element_text(face = "bold"),
+      axis.text.x = element_text(angle = 0, hjust = 0.5)
     )
   
   ggsave(filename, p, width = width, height = height, dpi = 300)
@@ -233,19 +245,23 @@ save_horizontal_percent <- function(
 
 method_summary <- make_feature_summary(
   study_level, method_labels, "Study design/population"
-)
+) %>%
+  filter(percent >= 3)
 
 demographic_summary <- make_feature_summary(
   study_level, demographic_labels, "Demographics"
-)
+) %>%
+  filter(percent >= 3)
 
 intake_summary <- make_feature_summary(
   study_level, intake_labels, "Intake/eating behavior"
-)
+) %>%
+  filter(percent >= 3)
 
 questionnaire_summary <- make_feature_summary(
   study_level, questionnaire_labels, "Questionnaires/related measures"
-)
+) %>%
+  filter(percent >= 3)
 
 all_feature_summary <- bind_rows(
   method_summary,
@@ -270,48 +286,28 @@ save_horizontal_percent(
 )
 
 # FIGURE 02: All data availability
-
-all_data_availability <- bind_rows(
-  demographic_summary,
-  intake_summary,
-  questionnaire_summary
-)
+all_data_availability <- bind_rows(demographic_summary, intake_summary, questionnaire_summary)
 
 if (nrow(all_data_availability) > 0) {
   p02 <- all_data_availability %>%
-    group_by(domain) %>%
-    mutate(feature = reorder(feature, percent)) %>%
-    ungroup() %>%
-    ggplot(aes(x = percent, y = feature)) +
-    geom_col(width = 0.72) +
-    geom_text(
-      aes(label = label),
-      hjust = -0.08,
-      size = 3.2
-    ) +
+    group_by(domain) %>% mutate(feature = reorder(feature, percent)) %>% ungroup() %>%
+    ggplot(aes(x = percent, y = feature, fill = domain)) +
+    geom_col(width = 0.72, show.legend = FALSE) +
+    geom_text(aes(label = label), hjust = -0.08, size = 4.2) +
     facet_wrap(~domain, scales = "free_y", ncol = 1) +
-    scale_x_continuous(
-      labels = label_percent(scale = 1, accuracy = 1),
-      limits = c(0, max(100, max(all_data_availability$percent, na.rm = TRUE) * 1.18))
-    ) +
-    labs(
-      title = "Data availability across the Rolls Collection",
-      subtitle = paste0("Percentage of distinct studies containing each data element (N = ", n_studies, ")"),
-      x = "Percentage of studies",
-      y = NULL
-    ) +
-    theme_minimal(base_size = 11) +
-    theme(
-      panel.grid.major.y = element_blank(),
-      panel.grid.minor = element_blank(),
-      strip.text = element_text(face = "bold"),
-      plot.title = element_text(face = "bold")
-    )
-  
-  ggsave(
-    "figures/figure_02_all_data_availability.png",
-    p02, width = 9, height = 10.5, dpi = 300
-  )
+    scale_fill_manual(values = c("Demographics"=rolls_colors["blue"],
+                                 "Intake/eating behavior"=rolls_colors["green"],
+                                 "Questionnaires/related measures"=rolls_colors["orange"])) +
+    scale_x_continuous(labels=label_percent(scale=1, accuracy=1),
+                       limits=c(0,max(100,max(all_data_availability$percent,na.rm=TRUE)*1.18))) +
+    labs(title="Data availability across the Rolls Collection",
+         subtitle=paste0("Percentage of distinct studies containing each data element (N = ",n_studies,")"),
+         x="Percentage of studies", y=NULL) +
+    theme_minimal(base_size=14) +
+    theme(panel.grid.major.y=element_blank(), panel.grid.minor=element_blank(),
+          strip.text=element_text(face="bold",size=14),
+          plot.title=element_text(face="bold",size=18), axis.text=element_text(size=12))
+  ggsave("figures/figure_02_all_data_availability.png",p02,width=11,height=13,dpi=300)
 }
 
 # FIGURE 03: Demographic-data availability only
@@ -364,8 +360,13 @@ if (nrow(study_age) > 0) {
   p06 <- study_age %>%
     arrange(n_studies) %>%
     mutate(sample_age_clean = factor(sample_age_clean, levels = sample_age_clean)) %>%
-    ggplot(aes(x = n_studies, y = sample_age_clean)) +
-    geom_col(width = 0.7) +
+    ggplot(aes(x = n_studies, y = sample_age_clean, fill = sample_age_clean)) +
+    geom_col(width = 0.7, show.legend = FALSE) +
+    scale_fill_manual(values = c(
+      "Child" = unname(rolls_colors["orange"]),
+      "Adult" = unname(rolls_colors["blue"]),
+      "Older adults" = unname(rolls_colors["green"])
+    )) +
     geom_text(aes(label = label), hjust = -0.08, size = 3.5) +
     scale_x_continuous(
       limits = c(0, max(study_age$n_studies) * 1.22),
@@ -405,8 +406,13 @@ if (nrow(study_sex) > 0) {
   p07 <- study_sex %>%
     arrange(n_studies) %>%
     mutate(sample_sex_clean = factor(sample_sex_clean, levels = sample_sex_clean)) %>%
-    ggplot(aes(x = n_studies, y = sample_sex_clean)) +
-    geom_col(width = 0.7) +
+    ggplot(aes(x = n_studies, y = sample_sex_clean, fill = sample_sex_clean)) +
+    geom_col(width = 0.7, show.legend = FALSE) +
+    scale_fill_manual(values = c(
+      "Female" = unname(rolls_colors["orange"]),
+      "Male" = unname(rolls_colors["blue"]),
+      "Mixed" = unname(rolls_colors["green"])
+    )) +
     geom_text(aes(label = label), hjust = -0.08, size = 3.5) +
     scale_x_continuous(
       limits = c(0, max(study_sex$n_studies) * 1.22),
@@ -446,8 +452,13 @@ study_location <- rolls_data %>%
 if (nrow(study_location) > 0) {
   p08 <- study_location %>%
     mutate(location_clean = factor(location_clean, levels = location_clean)) %>%
-    ggplot(aes(x = n_studies, y = location_clean)) +
-    geom_col(width = 0.7) +
+    ggplot(aes(x = n_studies, y = location_clean, fill = location_clean)) +
+    geom_col(width = 0.7, show.legend = FALSE) +
+    scale_fill_manual(values = rep(
+      unname(c(rolls_colors["blue"], rolls_colors["orange"], rolls_colors["green"],
+               rolls_colors["purple"], rolls_colors["sky"], rolls_colors["vermillion"])),
+      length.out = n_distinct(study_location$location_clean)
+    )) +
     geom_text(aes(label = label), hjust = -0.08, size = 3.4) +
     scale_x_continuous(
       limits = c(0, max(study_location$n_studies) * 1.23),
@@ -468,29 +479,33 @@ if (nrow(study_location) > 0) {
   ggsave("figures/figure_08_studies_by_location.png", p08, width = 8, height = 5, dpi = 300)
 }
 
-# FIGURE 09: Number of studies beginning each year
+# FIGURE 09: Distinct studies by adjustable year bin
+# Change year_bin_width to 2, 4, or 5 to compare bin sizes.
+year_bin_width <- 3
 
-studies_by_year <- study_level %>%
+studies_by_year_bin <- study_level %>%
   filter(!is.na(year), is.finite(year)) %>%
-  count(year, name = "n_studies") %>%
-  arrange(year)
+  mutate(bin_start=floor(year/year_bin_width)*year_bin_width,
+         bin_end=bin_start+year_bin_width-1,
+         year_bin=paste0(bin_start,"-",bin_end)) %>%
+  distinct(study,bin_start,bin_end,year_bin) %>%
+  count(bin_start,bin_end,year_bin,name="n_studies") %>% arrange(bin_start)
 
-if (nrow(studies_by_year) > 0) {
-  p09 <- ggplot(studies_by_year, aes(x = year, y = n_studies)) +
-    geom_col(width = 0.85) +
-    scale_x_continuous(breaks = pretty_breaks()) +
-    labs(
-      title = "Number of studies represented by study year",
-      x = "Study year",
-      y = "Number of distinct studies"
-    ) +
-    theme_minimal(base_size = 12) +
-    theme(
-      panel.grid.minor = element_blank(),
-      plot.title = element_text(face = "bold")
-    )
-  
-  ggsave("figures/figure_09_studies_by_year.png", p09, width = 9, height = 5, dpi = 300)
+if(nrow(studies_by_year_bin)>0){
+  p09 <- studies_by_year_bin %>%
+    mutate(year_bin=factor(year_bin,levels=year_bin)) %>%
+    ggplot(aes(x=year_bin,y=n_studies)) +
+    geom_col(width=.75,fill=rolls_colors["blue"]) +
+    geom_text(aes(label=n_studies),vjust=-.3,size=3.8) +
+    scale_y_continuous(limits=c(0,max(studies_by_year_bin$n_studies)*1.15),
+                       expand=expansion(mult=c(0,0))) +
+    labs(title=paste0("Distinct studies represented across ",year_bin_width,"-year periods"),
+         subtitle="Each study is counted once based on its study year",
+         x="Study period",y="Number of distinct studies") +
+    theme_minimal(base_size=13) +
+    theme(axis.text.x=element_text(angle=0,hjust=0.5),panel.grid.minor=element_blank(),
+          plot.title=element_text(face="bold"))
+  ggsave("figures/figure_09_studies_by_year.png",p09,width=10,height=5.8,dpi=300)
 }
 
 # FIGURE 10: Number of studies by 5-year period
@@ -508,7 +523,7 @@ if (nrow(study_period) > 0) {
   p10 <- study_period %>%
     mutate(period = factor(period, levels = period)) %>%
     ggplot(aes(x = period, y = n_studies)) +
-    geom_col(width = 0.75) +
+    geom_col(width = 0.75, fill = unname(rolls_colors["green"])) +
     geom_text(aes(label = n_studies), vjust = -0.3, size = 3.5) +
     scale_y_continuous(
       limits = c(0, max(study_period$n_studies) * 1.15),
@@ -521,7 +536,7 @@ if (nrow(study_period) > 0) {
     ) +
     theme_minimal(base_size = 12) +
     theme(
-      axis.text.x = element_text(angle = 45, hjust = 1),
+      axis.text.x = element_text(angle = 0, hjust = 0.5),
       panel.grid.minor = element_blank(),
       plot.title = element_text(face = "bold")
     )
@@ -538,7 +553,7 @@ age_flag_vars <- intersect(
 study_age_level <- rolls_data %>%
   filter(
     !is.na(sample_age_clean),
-    sample_age_clean %in% c("Child", "Adult", "Elderly")
+    sample_age_clean %in% c("Child", "Adult", "Older adults")
   ) %>%
   group_by(study, sample_age_clean) %>%
   summarise(
@@ -594,10 +609,12 @@ if (nrow(age_selected) > 0) {
   p11 <- age_selected %>%
     mutate(
       feature = factor(feature, levels = rev(selected_age_features)),
-      sample_age_clean = factor(sample_age_clean, levels = c("Child", "Adult", "Elderly"))
+      sample_age_clean = factor(sample_age_clean, levels = c("Child", "Adult", "Older adults"))
     ) %>%
     ggplot(aes(x = percent, y = feature, fill = sample_age_clean)) +
     geom_col(position = position_dodge(width = 0.78), width = 0.7) +
+    scale_fill_manual(values=c("Child"=rolls_colors["orange"],"Adult"=rolls_colors["blue"],
+                               "Older adults"=rolls_colors["green"])) +
     scale_x_continuous(
       labels = label_percent(scale = 1, accuracy = 1),
       limits = c(0, 100)
@@ -626,10 +643,12 @@ age_method_summary <- make_age_summary(method_labels)
 if (nrow(age_method_summary) > 0) {
   p12 <- age_method_summary %>%
     mutate(
-      sample_age_clean = factor(sample_age_clean, levels = c("Child", "Adult", "Elderly"))
+      sample_age_clean = factor(sample_age_clean, levels = c("Child", "Adult", "Older adults"))
     ) %>%
     ggplot(aes(x = percent, y = reorder(feature, percent), fill = sample_age_clean)) +
     geom_col(position = position_dodge(width = 0.78), width = 0.7) +
+    scale_fill_manual(values=c("Child"=rolls_colors["orange"],"Adult"=rolls_colors["blue"],
+                               "Older adults"=rolls_colors["green"])) +
     scale_x_continuous(
       labels = label_percent(scale = 1, accuracy = 1),
       limits = c(0, 100)
@@ -683,10 +702,12 @@ if (nrow(participant_period) > 0) {
   p17 <- participant_period %>%
     mutate(
       period = factor(period, levels = unique(period[order(period_start)])),
-      sample_age_clean = factor(sample_age_clean, levels = c("Child", "Adult", "Elderly"))
+      sample_age_clean = factor(sample_age_clean, levels = c("Child", "Adult", "Older adults"))
     ) %>%
     ggplot(aes(x = period, y = participants, fill = sample_age_clean)) +
-    geom_col() +
+    geom_col(fill = unname(rolls_colors["blue"])) +
+    scale_fill_manual(values=c("Child"=rolls_colors["orange"],"Adult"=rolls_colors["blue"],
+                               "Older adults"=rolls_colors["green"])) +
     labs(
       title = "Participants represented across 5-year periods",
       subtitle = "Stacked by sample age group",
@@ -696,7 +717,7 @@ if (nrow(participant_period) > 0) {
     ) +
     theme_minimal(base_size = 11) +
     theme(
-      axis.text.x = element_text(angle = 45, hjust = 1),
+      axis.text.x = element_text(angle = 0, hjust = 0.5),
       panel.grid.minor = element_blank(),
       plot.title = element_text(face = "bold")
     )
@@ -780,47 +801,116 @@ write_csv(
   "tables/table_07_studies_by_location.csv"
 )
 
-cat("Rolls Collection candidate figures complete\n")
-cat("Distinct studies:", n_studies, "\n")
-cat("Figures folder:", normalizePath("figures"), "\n")
-cat("Tables folder:", normalizePath("tables"), "\n\n")
+# TABLE 08: Poster-style overview of study characteristics and included measures
 
-cat("Candidate figures created:\n")
-created_figures <- list.files(
-  "figures",
-  pattern = "^figure_.*\\.png$",
-  full.names = FALSE
+poster_age_levels <- c("Older adults", "Adult", "Child")
+
+poster_study_age <- rolls_data %>%
+  filter(sample_age_clean %in% poster_age_levels) %>%
+  group_by(study, sample_age_clean) %>%
+  summarise(
+    study_n = {
+      z <- study_n[is.finite(study_n)]
+      if (length(z) == 0) NA_real_ else max(z)
+    },
+    location = paste(unique(na.omit(location_clean)), collapse = "; "),
+    sample_sex = paste(unique(na.omit(sample_sex_clean)), collapse = "; "),
+    race_present = if ("race" %in% names(rolls_data)) as.integer(any(is_present(race), na.rm = TRUE)) else 0L,
+    ses_present = if ("ses" %in% names(rolls_data)) as.integer(any(is_present(ses), na.rm = TRUE)) else 0L,
+    bmi_present = if ("bmi" %in% names(rolls_data)) as.integer(any(is_present(bmi), na.rm = TRUE)) else 0L,
+    measured_present = if ("measured_intake" %in% names(rolls_data)) as.integer(any(is_present(measured_intake), na.rm = TRUE)) else 0L,
+    cho_present = if ("cho_intake" %in% names(rolls_data)) as.integer(any(is_present(cho_intake), na.rm = TRUE)) else 0L,
+    fat_present = if ("fat_intake" %in% names(rolls_data)) as.integer(any(is_present(fat_intake), na.rm = TRUE)) else 0L,
+    pro_present = if ("pro_intake" %in% names(rolls_data)) as.integer(any(is_present(pro_intake), na.rm = TRUE)) else 0L,
+    fiber_present = if ("fiber_intake" %in% names(rolls_data)) as.integer(any(is_present(fiber_intake), na.rm = TRUE)) else 0L,
+    .groups = "drop"
+  ) %>%
+  mutate(macro_present = as.integer(cho_present == 1 | fat_present == 1 | pro_present == 1))
+
+age_denoms <- poster_study_age %>%
+  count(sample_age_clean, name = "denominator")
+
+fmt_n_pct <- function(n, d) {
+  paste0(n, " (", round(100 * n / d), "%)")
+}
+
+make_poster_row <- function(label, variable) {
+  poster_study_age %>%
+    group_by(sample_age_clean) %>%
+    summarise(n = sum(.data[[variable]], na.rm = TRUE), .groups = "drop") %>%
+    right_join(age_denoms, by = "sample_age_clean") %>%
+    mutate(
+      n = replace_na(n, 0),
+      characteristic = label,
+      value = fmt_n_pct(n, denominator)
+    ) %>%
+    select(characteristic, sample_age_clean, value)
+}
+
+table08_long <- bind_rows(
+  age_denoms %>%
+    transmute(characteristic = "Number of Studies",
+              sample_age_clean,
+              value = as.character(denominator)),
+  poster_study_age %>%
+    group_by(sample_age_clean) %>%
+    summarise(
+      value = ifelse(
+        sum(is.finite(study_n)) > 1,
+        paste0(round(mean(study_n, na.rm = TRUE)), " (", round(sd(study_n, na.rm = TRUE)), ")"),
+        paste0(round(mean(study_n, na.rm = TRUE)), " (NA)")
+      ),
+      .groups = "drop"
+    ) %>%
+    mutate(characteristic = "Sample Size, Mean (SD)") %>%
+    select(characteristic, sample_age_clean, value),
+  make_poster_row("Data Present: Race/Ethnicity", "race_present"),
+  make_poster_row("Data Present: Socioeconomic Status", "ses_present"),
+  make_poster_row("Data Present: BMI/Weight Status", "bmi_present"),
+  make_poster_row("Data Present: Measured Intake", "measured_present"),
+  make_poster_row("Data Present: Macronutrient Intake", "macro_present"),
+  make_poster_row("Data Present: Fiber Intake", "fiber_present")
 )
-cat(paste0("  - ", created_figures, collapse = "\n"), "\n\n")
 
-cat("Figures retained in this script:
-")
-cat("  - figure_01_study_characteristics.png
-")
-cat("  - figure_02_all_data_availability.png
-")
-cat("  - figure_03_demographic_data_availability.png
-")
-cat("  - figure_04_intake_data_availability.png
-")
-cat("  - figure_05_questionnaire_availability.png
-")
-cat("  - figure_06_studies_by_age_group.png
-")
-cat("  - figure_07_studies_by_sex_composition.png
-")
-cat("  - figure_08_studies_by_location.png
-")
-cat("  - figure_09_studies_by_year.png
-")
-cat("  - figure_10_studies_by_5_year_period.png
-")
-cat("  - figure_11_selected_data_availability_by_age.png
-")
-cat("  - figure_12_study_characteristics_by_age.png
-")
-cat("  - figure_13_participants_by_5_year_period.png
-")
-cat("
-")
+location_rows <- bind_rows(
+  poster_study_age %>% mutate(flag = str_detect(str_to_lower(location), "johns hopkins")) %>%
+    group_by(sample_age_clean) %>% summarise(n = sum(flag, na.rm = TRUE), .groups = "drop") %>%
+    right_join(age_denoms, by = "sample_age_clean") %>%
+    mutate(characteristic = "Location: Johns Hopkins", n = replace_na(n, 0),
+           value = fmt_n_pct(n, denominator)) %>% select(characteristic, sample_age_clean, value),
+  poster_study_age %>% mutate(flag = str_detect(str_to_lower(location), "penn state")) %>%
+    group_by(sample_age_clean) %>% summarise(n = sum(flag, na.rm = TRUE), .groups = "drop") %>%
+    right_join(age_denoms, by = "sample_age_clean") %>%
+    mutate(characteristic = "Location: Penn State", n = replace_na(n, 0),
+           value = fmt_n_pct(n, denominator)) %>% select(characteristic, sample_age_clean, value)
+)
+
+sex_rows <- bind_rows(
+  lapply(c("Male","Female","Mixed"), function(sx) {
+    poster_study_age %>%
+      mutate(flag = sample_sex == sx) %>%
+      group_by(sample_age_clean) %>%
+      summarise(n = sum(flag, na.rm = TRUE), .groups = "drop") %>%
+      right_join(age_denoms, by = "sample_age_clean") %>%
+      mutate(characteristic = paste0("Study Sex: ", sx),
+             n = replace_na(n, 0),
+             value = fmt_n_pct(n, denominator)) %>%
+      select(characteristic, sample_age_clean, value)
+  })
+)
+
+table08 <- bind_rows(
+  table08_long %>% slice(1:(nrow(age_denoms) * 2)),
+  location_rows,
+  sex_rows,
+  table08_long %>% slice((nrow(age_denoms) * 2 + 1):n())
+) %>%
+  mutate(sample_age_clean = factor(sample_age_clean, levels = poster_age_levels)) %>%
+  pivot_wider(names_from = sample_age_clean, values_from = value) %>%
+  select(Characteristic = characteristic, `Older adults`, Adult, Child)
+
+write_csv(table08, "tables/table_08_participant_characteristics_by_age.csv")
+
+message("Finished creating revised figures and tables.")
+
 

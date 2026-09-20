@@ -13,10 +13,10 @@ Child,cho_intake,9,21,42.857142857142854,Carbohydrate intake
 Child,fat_intake,9,21,42.857142857142854,Fat intake
 Child,fiber_intake,9,21,42.857142857142854,Fiber intake
 Child,pro_intake,9,21,42.857142857142854,Protein intake
-Elderly,bmi,1,2,50,BMI/Weight status
-Elderly,cho_intake,1,2,50,Carbohydrate intake
-Elderly,fat_intake,1,2,50,Fat intake
-Elderly,measured_intake,1,2,50,Measured intake
-Elderly,pro_intake,1,2,50,Protein intake
-Elderly,ses,0,2,0,Socioeconomic status
-Elderly,fiber_intake,0,2,0,Fiber intake
+Older adults,bmi,1,2,50,BMI/Weight status
+Older adults,cho_intake,1,2,50,Carbohydrate intake
+Older adults,fat_intake,1,2,50,Fat intake
+Older adults,measured_intake,1,2,50,Measured intake
+Older adults,pro_intake,1,2,50,Protein intake
+Older adults,ses,0,2,0,Socioeconomic status
+Older adults,fiber_intake,0,2,0,Fiber intake
