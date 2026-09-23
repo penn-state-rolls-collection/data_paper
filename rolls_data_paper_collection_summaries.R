@@ -295,9 +295,11 @@ if (nrow(all_data_availability) > 0) {
     geom_col(width = 0.72, show.legend = FALSE) +
     geom_text(aes(label = label), hjust = -0.08, size = 4.2) +
     facet_wrap(~domain, scales = "free_y", ncol = 1) +
-    scale_fill_manual(values = c("Demographics"=rolls_colors["blue"],
-                                 "Intake/eating behavior"=rolls_colors["green"],
-                                 "Questionnaires/related measures"=rolls_colors["orange"])) +
+    scale_fill_manual(values = c(
+      "Demographics" = unname(rolls_colors["blue"]),
+      "Intake/eating behavior" = unname(rolls_colors["green"]),
+      "Questionnaires/related measures" = unname(rolls_colors["orange"])
+    )) +
     scale_x_continuous(labels=label_percent(scale=1, accuracy=1),
                        limits=c(0,max(100,max(all_data_availability$percent,na.rm=TRUE)*1.18))) +
     labs(title="Data availability across the Rolls Collection",
@@ -523,7 +525,7 @@ if (nrow(study_period) > 0) {
   p10 <- study_period %>%
     mutate(period = factor(period, levels = period)) %>%
     ggplot(aes(x = period, y = n_studies)) +
-    geom_col(width = 0.75, fill = unname(rolls_colors["green"])) +
+    geom_col(width = 0.75, fill = unname(rolls_colors["blue"])) +
     geom_text(aes(label = n_studies), vjust = -0.3, size = 3.5) +
     scale_y_continuous(
       limits = c(0, max(study_period$n_studies) * 1.15),
@@ -613,8 +615,14 @@ if (nrow(age_selected) > 0) {
     ) %>%
     ggplot(aes(x = percent, y = feature, fill = sample_age_clean)) +
     geom_col(position = position_dodge(width = 0.78), width = 0.7) +
-    scale_fill_manual(values=c("Child"=rolls_colors["orange"],"Adult"=rolls_colors["blue"],
-                               "Older adults"=rolls_colors["green"])) +
+    scale_fill_manual(
+      values = c(
+        "Child" = unname(rolls_colors["orange"]),
+        "Adult" = unname(rolls_colors["blue"]),
+        "Older adults" = unname(rolls_colors["green"])
+      ),
+      breaks = c("Older adults", "Adult", "Child")
+    ) +
     scale_x_continuous(
       labels = label_percent(scale = 1, accuracy = 1),
       limits = c(0, 100)
@@ -647,8 +655,11 @@ if (nrow(age_method_summary) > 0) {
     ) %>%
     ggplot(aes(x = percent, y = reorder(feature, percent), fill = sample_age_clean)) +
     geom_col(position = position_dodge(width = 0.78), width = 0.7) +
-    scale_fill_manual(values=c("Child"=rolls_colors["orange"],"Adult"=rolls_colors["blue"],
-                               "Older adults"=rolls_colors["green"])) +
+    scale_fill_manual(values = c(
+      "Child" = unname(rolls_colors["orange"]),
+      "Adult" = unname(rolls_colors["blue"]),
+      "Older adults" = unname(rolls_colors["green"])
+    )) +
     scale_x_continuous(
       labels = label_percent(scale = 1, accuracy = 1),
       limits = c(0, 100)
@@ -706,8 +717,11 @@ if (nrow(participant_period) > 0) {
     ) %>%
     ggplot(aes(x = period, y = participants, fill = sample_age_clean)) +
     geom_col(fill = unname(rolls_colors["blue"])) +
-    scale_fill_manual(values=c("Child"=rolls_colors["orange"],"Adult"=rolls_colors["blue"],
-                               "Older adults"=rolls_colors["green"])) +
+    scale_fill_manual(values = c(
+      "Child" = unname(rolls_colors["orange"]),
+      "Adult" = unname(rolls_colors["blue"]),
+      "Older adults" = unname(rolls_colors["green"])
+    )) +
     labs(
       title = "Participants represented across 5-year periods",
       subtitle = "Stacked by sample age group",
@@ -912,5 +926,3 @@ table08 <- bind_rows(
 write_csv(table08, "tables/table_08_participant_characteristics_by_age.csv")
 
 message("Finished creating revised figures and tables.")
-
-
